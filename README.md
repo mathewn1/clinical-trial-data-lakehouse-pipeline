@@ -1,2 +1,2 @@
 # clinical-trial-data-lakehouse-pipeline
-An end-to-end data engineering project that ingests, transforms, and organizes clinical data using a lakehouse architecture for reliable analytics and reporting.
+End-to-end clinical data lakehouse: ingests public CDISC SDTM, FDA FAERS and ClinicalTrials.gov data into a medallion architecture (bronze → silver → gold) using PySpark and Microsoft Fabric, building ADaM-style tables and a safety-signal mart for Power BI.
