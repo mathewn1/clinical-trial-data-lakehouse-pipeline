@@ -35,7 +35,10 @@ spark.sql("CREATE SCHEMA IF NOT EXISTS silver")
 DOMAINS = {
     "dm": ["USUBJID"],
     "ae": ["USUBJID", "AESEQ"],
+    "ex": ["USUBJID", "EXSEQ"],
+    "ds": ["USUBJID", "DSSEQ"],
 }
+
 print("run_id:", RUN_ID)
 
 # METADATA ********************
@@ -124,9 +127,11 @@ def cast_numbers(df):
     return df
 
 def standardise_ct(df, ct):
-    # Match values to the define.xml codelist, ignoring case
+    # Match values to the define.xml codelist, ignoring case.
+    # Text columns only: numeric codes like VISITNUM keep their type.
+    types = dict(df.dtypes)
     for col, allowed in ct.items():
-        if col not in df.columns:
+        if types.get(col) != "string":
             continue
         lookup = F.create_map(*[F.lit(x) for v in allowed for x in (v.upper(), v)])
         df = df.withColumn(col, F.coalesce(lookup[F.upper(F.col(col))], F.col(col)))
@@ -179,9 +184,9 @@ def to_silver(domain, keys):
     return out, dups
 
 # Run it for every domain in DOMAINS (cell 1)
-results = {d: to_silver(d, keys) for d, keys in DOMAINS.items()}
-dm, dm_dups = results["dm"]
-ae, ae_dups = results["ae"]
+silver = {d: to_silver(d, keys) for d, keys in DOMAINS.items()}
+dm, dm_dups = silver["dm"]
+ae, ae_dups = silver["ae"]
 
 # METADATA ********************
 
@@ -200,18 +205,27 @@ def check(table, name, bad_rows, severity="error"):
 
 def standard_checks(table, df, keys, dups, extra_required=()):
     check(table, f"duplicate key {keys} in bronze", dups, "warn")
+
     for col in dict.fromkeys(list(required.get(table, [])) + list(extra_required)):
         if col in df.columns:
             check(table, f"{col} is null", df.filter(F.col(col).isNull()))
+
     for col in [c for c in df.columns if c.endswith("DTC")]:
         bad = df.filter(F.col(col).isNotNull() & (
             F.col(f"{col}_PREC").isNull() |
             (F.col(f"{col}_PREC").isin("date", "datetime") & F.col(f"{col}_DT").isNull())))
         check(table, f"{col} not valid ISO 8601", bad)
+
+    types = dict(df.dtypes)
     for col, allowed in domain_ct.get(table, {}).items():
-        if col in df.columns:
-            check(table, f"{col} outside codelist",
-                  df.filter(F.col(col).isNotNull() & ~F.col(col).isin(allowed)), "warn")
+        if col not in df.columns:
+            continue
+        if types[col] == "string":
+            values, c = allowed, F.col(col)
+        else:  # numeric column: compare as numbers, not text
+            values, c = [float(v) for v in allowed], F.col(col).cast("double")
+        check(table, f"{col} outside codelist",
+              df.filter(F.col(col).isNotNull() & ~c.isin(values)), "warn")
 
 # --- DM ---
 standard_checks("dm", dm, DOMAINS["dm"], dm_dups)
@@ -226,6 +240,10 @@ check("ae", "same event recorded more than once (USUBJID, AESPID, AESTDTC)",
       ae.groupBy("USUBJID", "AESPID", "AESTDTC").count().filter("count > 1"), "warn")
 check("ae", "end date present but outcome NOT RECOVERED",
       ae.filter(F.col("AEENDTC").isNotNull() & (F.col("AEOUT") == "NOT RECOVERED/NOT RESOLVED")), "warn")
+
+# --- EX, DS ---
+standard_checks("ex", silver["ex"][0], DOMAINS["ex"], silver["ex"][1])
+standard_checks("ds", silver["ds"][0], DOMAINS["ds"], silver["ds"][1])
 
 print(len(results), "checks run")
 
@@ -243,7 +261,7 @@ dq = spark.createDataFrame(results,
     "severity string, failed_rows long, status string")
 
 dq.write.mode("append").saveAsTable("silver.dq_results")
-display(dq.orderBy(F.desc("status"), "table_name", "check_name"))
+display(dq.filter("status = 'FAIL'"))
 
 # METADATA ********************
 
@@ -260,6 +278,35 @@ spark.sql("""
   FROM silver.dq_results
   GROUP BY run_id ORDER BY run_ts
 """).show(truncate=False)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+spark.sql("""
+  SELECT table_name, check_name, severity, failed_rows
+  FROM silver.dq_results
+  WHERE run_id = (SELECT run_id FROM silver.dq_results ORDER BY run_ts DESC LIMIT 1)
+    AND status = 'FAIL'
+  ORDER BY severity, table_name
+""").show(truncate=False)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
+print("codelist:", domain_ct["ex"]["VISITNUM"])
+spark.table("silver.ex").select("VISITNUM").distinct().orderBy("VISITNUM").show()
 
 # METADATA ********************
 
