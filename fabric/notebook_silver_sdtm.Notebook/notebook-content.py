@@ -37,8 +37,9 @@ DOMAINS = {
     "ae": ["USUBJID", "AESEQ"],
     "ex": ["USUBJID", "EXSEQ"],
     "ds": ["USUBJID", "DSSEQ"],
+    "lb": ["USUBJID", "LBSEQ"],
+    "vs": ["USUBJID", "VSSEQ"],
 }
-
 print("run_id:", RUN_ID)
 
 # METADATA ********************
@@ -116,7 +117,8 @@ def clean_strings(df):
     return df
 
 def cast_numbers(df):
-    # SEQ/DY/AGE -> int, MedDRA codes (CD) -> long
+    # SEQ/DY/AGE -> int, MedDRA codes (CD) -> long,
+    # VISITNUM -> rounded to 2 decimals (removes float noise like 1.2000000000000002)
     for col, dtype in df.dtypes:
         if dtype != "double":
             continue
@@ -124,6 +126,8 @@ def cast_numbers(df):
             df = df.withColumn(col, F.col(col).cast("int"))
         elif col.endswith("CD"):
             df = df.withColumn(col, F.col(col).cast("long"))
+        elif col == "VISITNUM":
+            df = df.withColumn(col, F.round(F.col(col), 2))
     return df
 
 def standardise_ct(df, ct):
@@ -244,6 +248,10 @@ check("ae", "end date present but outcome NOT RECOVERED",
 # --- EX, DS ---
 standard_checks("ex", silver["ex"][0], DOMAINS["ex"], silver["ex"][1])
 standard_checks("ds", silver["ds"][0], DOMAINS["ds"], silver["ds"][1])
+
+# --- LB, VS ---
+standard_checks("lb", silver["lb"][0], DOMAINS["lb"], silver["lb"][1])
+standard_checks("vs", silver["vs"][0], DOMAINS["vs"], silver["vs"][1])
 
 print(len(results), "checks run")
 
