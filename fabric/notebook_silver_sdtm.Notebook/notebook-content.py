@@ -253,7 +253,61 @@ standard_checks("ds", silver["ds"][0], DOMAINS["ds"], silver["ds"][1])
 standard_checks("lb", silver["lb"][0], DOMAINS["lb"], silver["lb"][1])
 standard_checks("vs", silver["vs"][0], DOMAINS["vs"], silver["vs"][1])
 
+lb, vs = silver["lb"][0], silver["vs"][0]
+
+
+# --- LB rules ---
+check("lb", "USUBJID not in DM", lb.join(dm.select("USUBJID"), "USUBJID", "left_anti"))
+check("lb", "more than one standard unit per test",
+      lb.groupBy("LBTESTCD").agg(F.countDistinct("LBSTRESU").alias("n")).filter("n > 1"), "warn")
+check("lb", "numeric LBSTRESC but LBSTRESN missing",
+      lb.filter(F.col("LBSTRESC").rlike(r"^-?\d+(\.\d+)?$") & F.col("LBSTRESN").isNull()))
+
+# LBNRIND was assigned in original units (standard-unit limits are rounded),
+# so compare in original units
+orig_res = F.col("LBORRES").cast("double")
+orig_lo  = F.col("LBORNRLO").cast("double")
+orig_hi  = F.col("LBORNRHI").cast("double")
+
+expected_nrind = (F.when(orig_res < orig_lo, "L")
+                   .when(orig_res > orig_hi, "H")
+                   .otherwise("N"))
+check("lb", "LBNRIND disagrees with result vs normal range (original units)",
+      lb.filter(orig_res.isNotNull() & orig_lo.isNotNull() & orig_hi.isNotNull()
+                & F.col("LBNRIND").isNotNull()
+                & (F.upper(F.substring("LBNRIND", 1, 1)) != expected_nrind)), "warn")
+
+
+# --- VS rules ---
+check("vs", "USUBJID not in DM", vs.join(dm.select("USUBJID"), "USUBJID", "left_anti"))
+check("vs", "more than one standard unit per test",
+      vs.groupBy("VSTESTCD").agg(F.countDistinct("VSSTRESU").alias("n")).filter("n > 1"), "warn")
+
+VS_RANGES = {"SYSBP": (60, 250), "DIABP": (30, 150), "PULSE": (30, 200),
+             "TEMP": (34, 42), "WEIGHT": (30, 250), "HEIGHT": (120, 220)}
+for test, (lo, hi) in VS_RANGES.items():
+    check("vs", f"{test} outside plausible range {lo}-{hi}",
+          vs.filter((F.col("VSTESTCD") == test) &
+                    ((F.col("VSSTRESN") < lo) | (F.col("VSSTRESN") > hi))), "warn")
+
+
 print(len(results), "checks run")
+
+
+
+## Known data issues (kept in silver, documented here)
+
+##**AE**
+## ~294 events are recorded 2–4 times, differing only in AEOUT. Count events as distinct USUBJID + AESPID; resolve in ADaM against the PHUSE ADAE.
+## 250 rows have an end date but outcome "NOT RECOVERED/NOT RESOLVED". Kept as-is; resolved in ADaM.
+## 26 AEs have partial start dates (15 month-only, 11 year-only). Original text kept, no imputation in silver.
+
+## VISITNUM (all domains)**
+## Source values carried float noise (e.g. 1.2000000000000002), which failed exact codelist matching. Rounded to 2 decimals in silver.
+
+##LB**
+## LBNRIND was assigned in original units. Standard-unit limits were rounded during conversion, so ~156 boundary values look inconsistent in standard units. The DQ check compares in original units (56,659 of 59,580 rows comparable) and passes.
+## Gold should use the source LBNRIND, not recompute it.
 
 # METADATA ********************
 
