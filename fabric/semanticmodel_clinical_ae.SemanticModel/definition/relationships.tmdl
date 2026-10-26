@@ -1,0 +1,4 @@
+relationship ff18985c-10be-fcf3-1b89-b61802a2b880
+	fromColumn: adae.USUBJID
+	toColumn: adsl.USUBJID
+

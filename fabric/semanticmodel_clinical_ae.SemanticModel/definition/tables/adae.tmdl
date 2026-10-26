@@ -1,0 +1,589 @@
+table adae
+	lineageTag: c55db511-01d7-45fa-938e-c11b73504af1
+	sourceLineageTag: [gold].[adae]
+
+	measure 'N Safety' =
+			
+			CALCULATE ( DISTINCTCOUNT ( adsl[USUBJID] ), adsl[SAFFL] = "Y" )
+		formatString: 0
+		lineageTag: 700eafd9-b094-46b9-a972-4a931266ea82
+
+		changedProperty = Name
+
+	measure 'Subjects with TEAE' =
+			
+			CALCULATE ( DISTINCTCOUNT ( adae[USUBJID] ), adae[TRTEMFL] = "Y", adae[SAFFL] = "Y" )
+		formatString: 0
+		lineageTag: da198a34-24bb-44ce-919d-2a829f172935
+
+		changedProperty = Name
+
+	measure 'TEAE %' =
+			
+			DIVIDE ( [Subjects with TEAE], [N Safety] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 42703da6-fe04-4b96-8f1d-dd0ccc9fa282
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+	measure 'TEAE Events' =
+			
+			CALCULATE ( COUNTROWS ( adae ), adae[TRTEMFL] = "Y", adae[SAFFL] = "Y" )
+		formatString: 0
+		lineageTag: 9bea2b22-6f8b-4277-8b2d-9cf27904b7e8
+
+		changedProperty = Name
+
+	column USUBJID
+		dataType: string
+		lineageTag: e190ba62-8c8c-4310-8756-1aea3b2d436b
+		sourceLineageTag: USUBJID
+		summarizeBy: none
+		sourceColumn: USUBJID
+
+		annotation SummarizationSetBy = Automatic
+
+	column STUDYID
+		dataType: string
+		lineageTag: 22a1464c-4154-4226-a7a8-e5572b4838e5
+		sourceLineageTag: STUDYID
+		summarizeBy: none
+		sourceColumn: STUDYID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOMAIN
+		dataType: string
+		lineageTag: 375ffae8-c682-4e28-97ae-7efa72b5ea74
+		sourceLineageTag: DOMAIN
+		summarizeBy: none
+		sourceColumn: DOMAIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESEQ
+		dataType: int64
+		formatString: 0
+		lineageTag: 33b1fbb9-3d11-480f-88b8-85706a7078b5
+		sourceLineageTag: AESEQ
+		summarizeBy: sum
+		sourceColumn: AESEQ
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESPID
+		dataType: string
+		lineageTag: 176f060c-501e-4249-86e1-e98f1d47d99d
+		sourceLineageTag: AESPID
+		summarizeBy: none
+		sourceColumn: AESPID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AETERM
+		dataType: string
+		lineageTag: 8e718826-0adc-4f03-a605-78aeea2d9b56
+		sourceLineageTag: AETERM
+		summarizeBy: none
+		sourceColumn: AETERM
+
+		annotation SummarizationSetBy = Automatic
+
+	column AELLT
+		dataType: string
+		lineageTag: 8af3932d-55ed-4a9a-9300-ff8ea6ecc84f
+		sourceLineageTag: AELLT
+		summarizeBy: none
+		sourceColumn: AELLT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AELLTCD
+		dataType: int64
+		formatString: 0
+		lineageTag: c2aa38f3-145c-4976-8fcf-06dfd0f44b1d
+		sourceLineageTag: AELLTCD
+		summarizeBy: sum
+		sourceColumn: AELLTCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEDECOD
+		dataType: string
+		lineageTag: 61f5a5ad-2c08-4364-ab43-21aaa08948d9
+		sourceLineageTag: AEDECOD
+		summarizeBy: none
+		sourceColumn: AEDECOD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEPTCD
+		dataType: int64
+		formatString: 0
+		lineageTag: 7714c5bc-8f0c-4510-b25a-0ff6be8731c6
+		sourceLineageTag: AEPTCD
+		summarizeBy: sum
+		sourceColumn: AEPTCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEHLT
+		dataType: string
+		lineageTag: 80182515-1746-4404-95f0-eef29a3a365e
+		sourceLineageTag: AEHLT
+		summarizeBy: none
+		sourceColumn: AEHLT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEHLTCD
+		dataType: int64
+		formatString: 0
+		lineageTag: 99988b33-d124-4aee-b805-177018f4f592
+		sourceLineageTag: AEHLTCD
+		summarizeBy: sum
+		sourceColumn: AEHLTCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEHLGT
+		dataType: string
+		lineageTag: 8fe1e18e-5c2f-4f1c-a521-36019f36005c
+		sourceLineageTag: AEHLGT
+		summarizeBy: none
+		sourceColumn: AEHLGT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEHLGTCD
+		dataType: int64
+		formatString: 0
+		lineageTag: 213d7b37-2c90-48cc-aca9-490dc4888636
+		sourceLineageTag: AEHLGTCD
+		summarizeBy: sum
+		sourceColumn: AEHLGTCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEBODSYS
+		dataType: string
+		lineageTag: eac5650b-80f1-44e3-a415-6a0bcd787229
+		sourceLineageTag: AEBODSYS
+		summarizeBy: none
+		sourceColumn: AEBODSYS
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEBDSYCD
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cb4cb8b-e0ea-4d87-8d99-7e6eaf735f11
+		sourceLineageTag: AEBDSYCD
+		summarizeBy: sum
+		sourceColumn: AEBDSYCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESOC
+		dataType: string
+		lineageTag: 83dcf0b8-8f96-435b-8fe7-57f60053ac6c
+		sourceLineageTag: AESOC
+		summarizeBy: none
+		sourceColumn: AESOC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESOCCD
+		dataType: int64
+		formatString: 0
+		lineageTag: 8305e588-1152-4ed1-bbea-e0d2d4cc583e
+		sourceLineageTag: AESOCCD
+		summarizeBy: sum
+		sourceColumn: AESOCCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESEV
+		dataType: string
+		lineageTag: ec9b3656-4535-49a8-a5e5-5939d62d3abc
+		sourceLineageTag: AESEV
+		summarizeBy: none
+		sourceColumn: AESEV
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESER
+		dataType: string
+		lineageTag: 1370deb4-57e7-4faa-9c62-08fa14368f10
+		sourceLineageTag: AESER
+		summarizeBy: none
+		sourceColumn: AESER
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEACN
+		dataType: string
+		lineageTag: 42f66a3c-cc04-4e26-a696-17ff76f53cd0
+		sourceLineageTag: AEACN
+		summarizeBy: none
+		sourceColumn: AEACN
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEREL
+		dataType: string
+		lineageTag: ff5ec76b-89e3-428f-825e-33165db86b47
+		sourceLineageTag: AEREL
+		summarizeBy: none
+		sourceColumn: AEREL
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEOUT
+		dataType: string
+		lineageTag: db229ea3-0209-4b42-8345-a52692b565b6
+		sourceLineageTag: AEOUT
+		summarizeBy: none
+		sourceColumn: AEOUT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESCAN
+		dataType: string
+		lineageTag: 34e0ad8a-6c54-4653-ab43-fcb2316ecf14
+		sourceLineageTag: AESCAN
+		summarizeBy: none
+		sourceColumn: AESCAN
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESCONG
+		dataType: string
+		lineageTag: b918eaa1-1fc8-4553-a347-25836bbda22f
+		sourceLineageTag: AESCONG
+		summarizeBy: none
+		sourceColumn: AESCONG
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESDISAB
+		dataType: string
+		lineageTag: 13dfe51f-56d6-4c9f-aeeb-98bae72953bf
+		sourceLineageTag: AESDISAB
+		summarizeBy: none
+		sourceColumn: AESDISAB
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESDTH
+		dataType: string
+		lineageTag: 5e01a604-6e6e-44b2-8510-a2d603f91e0f
+		sourceLineageTag: AESDTH
+		summarizeBy: none
+		sourceColumn: AESDTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESHOSP
+		dataType: string
+		lineageTag: 32077fc4-dc98-42a1-8dad-e8609912240c
+		sourceLineageTag: AESHOSP
+		summarizeBy: none
+		sourceColumn: AESHOSP
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESLIFE
+		dataType: string
+		lineageTag: b4aa98c7-9898-4f9f-8365-1b2fa44e56f6
+		sourceLineageTag: AESLIFE
+		summarizeBy: none
+		sourceColumn: AESLIFE
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESOD
+		dataType: string
+		lineageTag: 4cb476d1-cd41-4d84-97d5-6f55eff60913
+		sourceLineageTag: AESOD
+		summarizeBy: none
+		sourceColumn: AESOD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEDTC
+		dataType: string
+		lineageTag: 812ae0a3-64ff-4761-87ec-7ee457738aad
+		sourceLineageTag: AEDTC
+		summarizeBy: none
+		sourceColumn: AEDTC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESTDTC
+		dataType: string
+		lineageTag: d57ff7cf-1cf3-43cb-bf5d-14c8c9971998
+		sourceLineageTag: AESTDTC
+		summarizeBy: none
+		sourceColumn: AESTDTC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEENDTC
+		dataType: string
+		lineageTag: 9e48f7f5-9834-4ede-a59a-e73d05c2df59
+		sourceLineageTag: AEENDTC
+		summarizeBy: none
+		sourceColumn: AEENDTC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESTDY
+		dataType: int64
+		formatString: 0
+		lineageTag: 95f1eec4-3b10-4cd2-8ff4-9faf01321cad
+		sourceLineageTag: AESTDY
+		summarizeBy: sum
+		sourceColumn: AESTDY
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEENDY
+		dataType: int64
+		formatString: 0
+		lineageTag: a66306fa-add1-4a67-9e60-46a501622476
+		sourceLineageTag: AEENDY
+		summarizeBy: sum
+		sourceColumn: AEENDY
+
+		annotation SummarizationSetBy = Automatic
+
+	column _source_file
+		dataType: string
+		lineageTag: a040b15f-a2c6-4eb5-ab4c-4e0eabfc655f
+		sourceLineageTag: _source_file
+		summarizeBy: none
+		sourceColumn: _source_file
+
+		annotation SummarizationSetBy = Automatic
+
+	column _ingested_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ff968aad-be82-4dc1-aa86-dbdadb32f32c
+		sourceLineageTag: _ingested_at
+		summarizeBy: none
+		sourceColumn: _ingested_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEDTC_PREC
+		dataType: string
+		lineageTag: da1bff25-560f-468b-8815-1dbf0a0c99f9
+		sourceLineageTag: AEDTC_PREC
+		summarizeBy: none
+		sourceColumn: AEDTC_PREC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEDTC_DT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fc328c65-bd4a-4510-b4dd-931829a3a548
+		sourceLineageTag: AEDTC_DT
+		summarizeBy: none
+		sourceColumn: AEDTC_DT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEDTC_TS
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d6b2776e-8528-4560-b0ac-461502fe80ec
+		sourceLineageTag: AEDTC_TS
+		summarizeBy: none
+		sourceColumn: AEDTC_TS
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESTDTC_PREC
+		dataType: string
+		lineageTag: 978e728e-9559-4273-aaee-03f5bba66fd9
+		sourceLineageTag: AESTDTC_PREC
+		summarizeBy: none
+		sourceColumn: AESTDTC_PREC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESTDTC_DT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 870782dd-d6cc-4620-8a48-15961453f0fe
+		sourceLineageTag: AESTDTC_DT
+		summarizeBy: none
+		sourceColumn: AESTDTC_DT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AESTDTC_TS
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1207395e-d0b4-4c08-8c6a-72065287fd65
+		sourceLineageTag: AESTDTC_TS
+		summarizeBy: none
+		sourceColumn: AESTDTC_TS
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEENDTC_PREC
+		dataType: string
+		lineageTag: ffcac4b3-3d71-43fb-92ae-cbf736dbfb83
+		sourceLineageTag: AEENDTC_PREC
+		summarizeBy: none
+		sourceColumn: AEENDTC_PREC
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEENDTC_DT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 15c4a269-fbea-4c1a-993a-4bf8d6f1afd6
+		sourceLineageTag: AEENDTC_DT
+		summarizeBy: none
+		sourceColumn: AEENDTC_DT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AEENDTC_TS
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a52bb7d2-0f14-406e-bae5-1fbf139a070b
+		sourceLineageTag: AEENDTC_TS
+		summarizeBy: none
+		sourceColumn: AEENDTC_TS
+
+		annotation SummarizationSetBy = Automatic
+
+	column _run_id
+		dataType: string
+		lineageTag: 6f5b474f-124b-493f-949e-07674e72adcb
+		sourceLineageTag: _run_id
+		summarizeBy: none
+		sourceColumn: _run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column _silver_loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a6047e13-87f0-414e-9492-3b13f4bd6a47
+		sourceLineageTag: _silver_loaded_at
+		summarizeBy: none
+		sourceColumn: _silver_loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASTDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d7294eed-daec-43b9-897e-d2db2ccbca7d
+		sourceLineageTag: ASTDT
+		summarizeBy: none
+		sourceColumn: ASTDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column AENDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e01082d3-c7dd-47c0-a7e3-9f88092c1220
+		sourceLineageTag: AENDT
+		summarizeBy: none
+		sourceColumn: AENDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASTDTF
+		dataType: string
+		lineageTag: 63369546-9125-4732-9706-ebd948a25708
+		sourceLineageTag: ASTDTF
+		summarizeBy: none
+		sourceColumn: ASTDTF
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRT01A
+		dataType: string
+		lineageTag: 19931cea-e9c2-4126-b214-204c2c088610
+		sourceLineageTag: TRT01A
+		summarizeBy: none
+		sourceColumn: TRT01A
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRT01P
+		dataType: string
+		lineageTag: 94103f06-f767-4239-a190-99d91ef3a9f7
+		sourceLineageTag: TRT01P
+		summarizeBy: none
+		sourceColumn: TRT01P
+
+		annotation SummarizationSetBy = Automatic
+
+	column SAFFL
+		dataType: string
+		lineageTag: 70ed64ce-35e2-41d5-a5a9-af86f6f0fc92
+		sourceLineageTag: SAFFL
+		summarizeBy: none
+		sourceColumn: SAFFL
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTSDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4ef48ed8-ed61-416f-9296-933ca2c43d12
+		sourceLineageTag: TRTSDT
+		summarizeBy: none
+		sourceColumn: TRTSDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTEDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2528983d-acd1-492b-a09d-c8fb415f902a
+		sourceLineageTag: TRTEDT
+		summarizeBy: none
+		sourceColumn: TRTEDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASTDY
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b8bfe81-1eae-4c3e-9b5c-a4485d2bd55f
+		sourceLineageTag: ASTDY
+		summarizeBy: sum
+		sourceColumn: ASTDY
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTEMFL
+		dataType: string
+		lineageTag: 746b34e5-0ed3-4ee7-9796-8bb3126bbdbb
+		sourceLineageTag: TRTEMFL
+		summarizeBy: none
+		sourceColumn: TRTEMFL
+
+		annotation SummarizationSetBy = Automatic
+
+	partition adae = entity
+		mode: directLake
+		source
+			entityName: adae
+			schemaName: gold
+			expressionSource: 'DirectLake - lh_clinical'
+

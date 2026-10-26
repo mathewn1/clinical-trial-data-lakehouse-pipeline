@@ -1,0 +1,195 @@
+table adsl
+	lineageTag: 151052af-5519-4c84-8477-b5af20f343f8
+	sourceLineageTag: [gold].[adsl]
+
+	column USUBJID
+		dataType: string
+		lineageTag: 593b2e18-7f2b-40bb-8725-3fed42f1a4e7
+		sourceLineageTag: USUBJID
+		summarizeBy: none
+		sourceColumn: USUBJID
+
+		annotation SummarizationSetBy = Automatic
+
+	column STUDYID
+		dataType: string
+		lineageTag: 994faa4d-3abb-4569-b210-d1c5da6dd568
+		sourceLineageTag: STUDYID
+		summarizeBy: none
+		sourceColumn: STUDYID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUBJID
+		dataType: string
+		lineageTag: 5d7bfc7d-816c-4322-bcf0-451d72aa57ab
+		sourceLineageTag: SUBJID
+		summarizeBy: none
+		sourceColumn: SUBJID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITEID
+		dataType: string
+		lineageTag: b1cdbb93-dd49-4710-9260-a2f037a0f4bd
+		sourceLineageTag: SITEID
+		summarizeBy: none
+		sourceColumn: SITEID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGE
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f480547-80f7-4b11-8117-4212d64b741c
+		sourceLineageTag: AGE
+		summarizeBy: none
+		sourceColumn: AGE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SEX
+		dataType: string
+		lineageTag: 261a1446-95a9-4556-a728-e5f9ed4964e0
+		sourceLineageTag: SEX
+		summarizeBy: none
+		sourceColumn: SEX
+
+		annotation SummarizationSetBy = Automatic
+
+	column RACE
+		dataType: string
+		lineageTag: 51496b89-d2ea-4432-bfd8-d855a6e589f0
+		sourceLineageTag: RACE
+		summarizeBy: none
+		sourceColumn: RACE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ARM
+		dataType: string
+		lineageTag: 971a093f-9aff-456f-83b1-4accbc4d3f62
+		sourceLineageTag: ARM
+		summarizeBy: none
+		sourceColumn: ARM
+
+		annotation SummarizationSetBy = Automatic
+
+	column ARMCD
+		dataType: string
+		lineageTag: f5fac9cf-5185-40ff-9bd4-1b80dfc7a4cc
+		sourceLineageTag: ARMCD
+		summarizeBy: none
+		sourceColumn: ARMCD
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTARM
+		dataType: string
+		lineageTag: fa122995-bbd8-4ef5-be98-7feb650e791c
+		sourceLineageTag: ACTARM
+		summarizeBy: none
+		sourceColumn: ACTARM
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTSDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 397e97df-77d6-443b-972e-0eedfed44bc4
+		sourceLineageTag: TRTSDT
+		summarizeBy: none
+		sourceColumn: TRTSDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTEDT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9ff38f60-ec95-4023-86e6-14bf72d65f11
+		sourceLineageTag: TRTEDT
+		summarizeBy: none
+		sourceColumn: TRTEDT
+
+		annotation SummarizationSetBy = Automatic
+
+	column EOSSTT
+		dataType: string
+		lineageTag: c87146ec-9da5-47f3-9065-6698b773ef88
+		sourceLineageTag: EOSSTT
+		summarizeBy: none
+		sourceColumn: EOSSTT
+
+		annotation SummarizationSetBy = Automatic
+
+	column DCSREAS
+		dataType: string
+		lineageTag: ea611423-c329-4127-8fe4-2697f856ae5c
+		sourceLineageTag: DCSREAS
+		summarizeBy: none
+		sourceColumn: DCSREAS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRT01P
+		dataType: string
+		lineageTag: d1de9629-47e8-4800-8cf1-d13fd3bf366a
+		sourceLineageTag: TRT01P
+		summarizeBy: none
+		sourceColumn: TRT01P
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRT01A
+		dataType: string
+		lineageTag: 2990b07a-4942-4a12-89a7-9ace608b4c48
+		sourceLineageTag: TRT01A
+		summarizeBy: none
+		sourceColumn: TRT01A
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTARM_DM
+		dataType: string
+		lineageTag: 2186f38d-116c-4c6f-96ad-979684014210
+		sourceLineageTag: ACTARM_DM
+		summarizeBy: none
+		sourceColumn: ACTARM_DM
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGEGR1
+		dataType: string
+		lineageTag: c8e7843e-09af-46c2-beb4-e107c36c6a0f
+		sourceLineageTag: AGEGR1
+		summarizeBy: none
+		sourceColumn: AGEGR1
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRTDURD
+		dataType: int64
+		formatString: 0
+		lineageTag: 3eee6de8-5509-40b2-bbee-606b77c67816
+		sourceLineageTag: TRTDURD
+		summarizeBy: none
+		sourceColumn: TRTDURD
+
+		annotation SummarizationSetBy = Automatic
+
+	column SAFFL
+		dataType: string
+		lineageTag: 5af54e36-f14a-4b0b-9d93-158e7abf5971
+		sourceLineageTag: SAFFL
+		summarizeBy: none
+		sourceColumn: SAFFL
+
+		annotation SummarizationSetBy = Automatic
+
+	partition adsl = entity
+		mode: directLake
+		source
+			entityName: adsl
+			schemaName: gold
+			expressionSource: 'DirectLake - lh_clinical'
+
