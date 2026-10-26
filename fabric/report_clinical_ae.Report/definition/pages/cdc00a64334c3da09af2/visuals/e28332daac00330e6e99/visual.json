@@ -1,0 +1,168 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e28332daac00330e6e99",
+  "position": {
+    "x": 24.444444444444443,
+    "y": 240,
+    "z": 0,
+    "height": 212.5,
+    "width": 543.75,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adsl"
+                    }
+                  },
+                  "Property": "TRT01A"
+                }
+              },
+              "queryRef": "adsl.TRT01A",
+              "nativeQueryRef": "TRT01A"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "N Safety"
+                }
+              },
+              "queryRef": "adae.N Safety",
+              "nativeQueryRef": "N Safety"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "Subjects with TEAE"
+                }
+              },
+              "queryRef": "adae.Subjects with TEAE",
+              "nativeQueryRef": "Subjects with TEAE"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "TEAE %"
+                }
+              },
+              "queryRef": "adae.TEAE %",
+              "nativeQueryRef": "TEAE %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "TEAE Events"
+                }
+              },
+              "queryRef": "adae.TEAE Events",
+              "nativeQueryRef": "TEAE Events"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a6dab7c703935af7a560",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adsl"
+              }
+            },
+            "Property": "TRT01A"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eb7bf719074dff56d904",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "N Safety"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9d17c607b2778c7d3ff2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "Subjects with TEAE"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7834009f4eba080498d6",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "TEAE %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "861cc4d993aec8d17ca8",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "TEAE Events"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "628cc17f3774694add71",
+  "position": {
+    "x": 25,
+    "y": 138.75,
+    "z": 1001,
+    "height": 756.66666666666663,
+    "width": 1373.3333333333333,
+    "tabOrder": 1001
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adsl"
+                    }
+                  },
+                  "Property": "TRT01A"
+                }
+              },
+              "queryRef": "adsl.TRT01A",
+              "nativeQueryRef": "TRT01A",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "AEBODSYS"
+                }
+              },
+              "queryRef": "adae.AEBODSYS",
+              "nativeQueryRef": "AEBODSYS",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "AEDECOD"
+                }
+              },
+              "queryRef": "adae.AEDECOD",
+              "nativeQueryRef": "AEDECOD",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "Subjects with TEAE"
+                }
+              },
+              "queryRef": "adae.Subjects with TEAE",
+              "nativeQueryRef": "Subjects with TEAE"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "TEAE %"
+                }
+              },
+              "queryRef": "adae.TEAE %",
+              "nativeQueryRef": "TEAE %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "adae"
+                  }
+                },
+                "Property": "TEAE %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "adae.AEBODSYS"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "adae"
+                    }
+                  },
+                  "Property": "AEBODSYS"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "adae.AEDECOD"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "01c155d6dbde12c24c46",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "AEBODSYS"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b9fb9000dd75fd8fae97",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "AEDECOD"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "20a9dd783f48f19c0c45",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adsl"
+              }
+            },
+            "Property": "TRT01A"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "fa2a63c6cd4a071a0ee0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "Subjects with TEAE"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b798b216fa0516659a59",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "adae"
+              }
+            },
+            "Property": "TEAE %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
